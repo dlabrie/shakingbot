@@ -1,0 +1,30 @@
+version: '3'
+services:
+  shakingbot:
+    container_name: shakingbot
+    entrypoint: ["python", "shake.py"]
+    restart: always
+    build:
+      context: docker-shakingbot
+    networks:
+      - default
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Halifax
+    volumes:
+      - ./pyscripts:/opt/shakepyscripts
+  shakingbot-tools:
+    container_name: shakingbot-tools
+    entrypoint: ["sleep","864000"]
+    restart: unless-stopped
+    build:
+      context: docker-shakingbot
+    networks:
+      - default
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Halifax
+    volumes:
+      - ./pyscripts:/opt/shakepyscripts
