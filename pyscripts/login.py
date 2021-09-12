@@ -48,8 +48,6 @@ if "accessToken" in accessResponse:
 
             jwtAccessToken = jwt.decode(accessResponse["accessToken"], algorithms="HS256", options={"verify_signature": False})
             
-            saveTransactionsCache({})
-            updateTransactions()
         else:
             print(accessResponse)
 
