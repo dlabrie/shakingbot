@@ -11,6 +11,6 @@ while True:
     print("\n--- "+str(datetime.datetime.now()))
     
     resp = shakingSats()
-    print(json.loads(resp.text)["message"]);        
+    print(json.loads(resp.text));        
 
     time.sleep((3600*6)+randint(0, 14400))
