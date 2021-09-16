@@ -5,12 +5,15 @@ import json
 
 from random import *
 
-counter = 0
+logging.basicConfig(filename='shakingbot.log', level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
 while True:
     
     print("\n--- "+str(datetime.datetime.now()))
+    logging.info("Attempting to Shake")
     
     resp = shakingSats()
-    print(json.loads(resp.text));        
+    print(json.loads(resp.text));
 
-    time.sleep((3600*6)+randint(0, 14400))
+    logging.info(json.loads(resp.text))
+    time.sleep((3600*6)+randint(0, 7200))
