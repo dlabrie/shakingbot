@@ -1,4 +1,4 @@
-# ShakePay Python Shakingbot
+# Python Shakingbot
 
 These scripts and bot are provided "as is" and do not have any guarantees on their outcome. By using these scripts you acknowledge this disclamer and assume full responsibility of using them.
 
