@@ -2,7 +2,7 @@
 
 These scripts and bot are provided "as is" and do not have any guarantees on their outcome. By using these scripts you acknowledge this disclamer and assume full responsibility of using them.
 
-If you wish to donate, send any amount other than 5$ to domi167. BTC and ETH Accepted :)
+If you wish to donate, send any amount to domi167. BTC and ETH accepted :)
 
 # What tools are there?
 
@@ -15,13 +15,18 @@ python shake.py
 
 ## ------------ Docker ------------
 ```bash
-docker-compose build
 docker-compose up -d shakingbot-tools
 docker exec -it shakingbot-tools sh
 python login.py
+
+# once you are logged in, you can try a shake by running:
+
+python shake.py
 ```
-Now before you start the bot.
-CTRL+D to detach
+CTRL+D to detach from the shakingbot-tools container, and shut it down
+```bash
+docker-compose down
+```
 
 Once you are satisfied with the outcome:
 Run the bot:
@@ -32,8 +37,10 @@ docker-compose up -d shakingbot
 ## ------------ No Docker ------------
 
 ```bash
+cd docker-shakingbot
 pip install --no-cache-dir -r requirements.txt
 pip install requests
+cd shakingbot
 python login.py
 ```
 

@@ -1,11 +1,10 @@
 version: '3'
 services:
   shakingbot:
+    image: labrie/shakingbot:latest
     container_name: shakingbot
     entrypoint: ["python", "shake.py"]
     restart: always
-    build:
-      context: docker-shakingbot
     networks:
       - default
     environment:
@@ -13,13 +12,12 @@ services:
       - PGID=1000
       - TZ=America/Halifax
     volumes:
-      - ./pyscripts:/opt/shakepyscripts
+      - ./creds:/opt/shakingbot/creds
+      
   shakingbot-tools:
+    image: labrie/shakingbot:latest
     container_name: shakingbot-tools
     entrypoint: ["sleep","864000"]
-    restart: unless-stopped
-    build:
-      context: docker-shakingbot
     networks:
       - default
     environment:
@@ -27,4 +25,4 @@ services:
       - PGID=1000
       - TZ=America/Halifax
     volumes:
-      - ./pyscripts:/opt/shakepyscripts
+      - ./creds:/opt/shakingbot/creds
