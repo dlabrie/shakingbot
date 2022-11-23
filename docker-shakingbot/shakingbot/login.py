@@ -5,22 +5,17 @@ import jwt
 
 import os
 
-if os.path.isfile(".uuid") != True:
-    f = open(".uuid", "w")
-    f.write("")
-    f.close()
-
-if os.path.isfile(".transactions") != True:
-    f = open(".transactions", "w")
+if os.path.isfile("/opt/shakingbot/creds/.uuid") != True:
+    f = open("/opt/shakingbot/creds/.uuid", "w")
     f.write("")
     f.close()
 
 if os.path.isfile(".jwtToken") != True:
-    f = open(".jwtToken", "w")
+    f = open("/opt/shakingbot/creds/.jwtToken", "w")
     f.write("")
     f.close()
 else:
-    print("Looks like you already have a session, delete the .jwtToken to force this")
+    print("Looks like you already have a session, delete /opt/shakingbot/creds/.jwtToken to force this")
     exit()
 
 shakepayUsername = input("Shakepay Usernamme : ")
