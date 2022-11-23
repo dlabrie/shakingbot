@@ -10,13 +10,14 @@ if os.path.isfile("/opt/shakingbot/creds/.uuid") != True:
     f.write("")
     f.close()
 
-if os.path.isfile(".jwtToken") != True:
+if os.path.isfile("/opt/shakingbot/creds/.jwtToken") != True:
     f = open("/opt/shakingbot/creds/.jwtToken", "w")
     f.write("")
     f.close()
 else:
-    print("Looks like you already have a session, delete /opt/shakingbot/creds/.jwtToken to force this")
-    exit()
+    if getJWT() != "":
+        print("Looks like you already have a session, delete /opt/shakingbot/creds/.jwtToken to force this")
+        exit()
 
 shakepayUsername = input("Shakepay Usernamme : ")
 shakepayPassword = getpass("Shakepay Password : ")
