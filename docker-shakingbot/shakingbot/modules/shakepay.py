@@ -14,17 +14,17 @@ def getUUID():
     fakeUUID = ""
     ## Generate a unique device id if needed
     try:
-        f = open("/opt/shakingbot/creds/.uuid", "r")
+        f = open("creds/.uuid", "r")
         fakeUUID = f.read()
         f.close()
     except:
-        f = open("/opt/shakingbot/creds/.uuid", "w")
+        f = open("creds/.uuid", "w")
         fakeUUID = str(uuid.uuid4())
         f.write(fakeUUID.upper())
         f.close()
 
     if fakeUUID == "":
-        f = open("/opt/shakingbot/creds/.uuid", "w")
+        f = open("creds/.uuid", "w")
         fakeUUID = str(uuid.uuid4())
         f.write(fakeUUID.upper())
         f.close()
@@ -32,14 +32,14 @@ def getUUID():
     return fakeUUID.upper()
 
 def saveJWT(jwt):
-    f = open("/opt/shakingbot/creds/.jwtToken", "w")
+    f = open("creds/.jwtToken", "w")
     f.write(jwt)
     f.close()
 
 def getJWT():
     jwt = ""
     try:
-        f = open("/opt/shakingbot/creds/.jwtToken", 'r')
+        f = open("creds/.jwtToken", 'r')
         jwt = f.read()
         f.close()
     except IOError:
