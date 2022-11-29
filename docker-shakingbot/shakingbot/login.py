@@ -1,5 +1,6 @@
 from getpass import getpass
 from modules.shakepay import *
+from modules.telegramnotif import *
 import json
 import jwt
 
@@ -22,24 +23,7 @@ else:
 shakepayUsername = input("Shakepay Username: ")
 shakepayPassword = getpass("Shakepay Password: ")
 
-## Ask user if Telegram notifications are wanted
-def apiToken(question, default_no=True):
-    choices = ' [y/N]: ' if default_no else ' [Y/n]: '
-    default_answer = 'n' if default_no else 'y'
-    reply = str(input(question + choices)).lower().strip() or default_answer
-    if reply[0] == 'y':
-        telegramAPIToken = input("Telegram Bot API Token: ")
-        with open('creds/.telegramAPIToken', 'w') as f:
-            f.write(telegramAPIToken)
-        telegramChatID = input("Telegram Chat ID: ")
-        with open('creds/.telegramChatID', 'w') as f:
-            f.write(telegramChatID)
-    if reply[0] == 'n':
-        return False
-    else:
-        return False if default_no else True
-
-reply = apiToken("Would you like to receive notifications via Telegram when a successful shake occurs?")
+reply = telegramApiToken("Would you like to receive notifications via Telegram when a successful shake occurs?")
 
 ## Login with provided credentials
 print("Sending initial login request")
