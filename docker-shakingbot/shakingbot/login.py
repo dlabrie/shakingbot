@@ -22,7 +22,6 @@ shakepayUsername = input("Shakepay Username: ")
 shakepayPassword = getpass("Shakepay Password: ")
 
 if telegramApiToken("Would you like to receive notifications via Telegram when a successful shake occurs?"):
-    ## Login with provided credentials
     print("Sending initial login request")
 
     response = shakepayAPIAuth(shakepayUsername, shakepayPassword)
