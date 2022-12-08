@@ -1,4 +1,8 @@
+import os
+import requests
+
 from modules.shakepay import *
+from modules.uxios import *
 
 telegramOPT = os.path.exists("creds/.telegramAPIToken")
 
