@@ -1,69 +1,72 @@
-from getpass import getpass
-
 import datetime
-import calendar
+import jwt 
+import logging
 import requests
+import time
 import uuid
 import json
-import pytz
-import csv
-import time
-import jwt
+import os
+
+from getpass import getpass
+from random import *
+from modules.telegramnotif import *
+from modules.uxios import *
+
+######################
+botVersion = "Ver. 1.22"
+######################
 
 def getUUID():
-    fakeUUID = ""
-    ## Generate a unique device id if needed
-    try:
-        f = open("creds/.uuid", "r")
-        fakeUUID = f.read()
-        f.close()
-    except:
-        f = open("creds/.uuid", "w")
-        fakeUUID = str(uuid.uuid4())
-        f.write(fakeUUID.upper())
-        f.close()
-
-    if fakeUUID == "":
-        f = open("creds/.uuid", "w")
-        fakeUUID = str(uuid.uuid4())
-        f.write(fakeUUID.upper())
-        f.close()
-  
-    return fakeUUID.upper()
+    filepath = "creds/.uuid"
+    if not os.path.exists(filepath):
+        with open(filepath, "w") as f:
+            fakeUUID = str(uuid.uuid4()).upper()
+            f.write(fakeUUID)
+    else:
+        with open(filepath, "r") as f:
+            fakeUUID = f.read().upper()
+    return fakeUUID
 
 def saveJWT(jwt):
-    f = open("creds/.jwtToken", "w")
-    f.write(jwt)
-    f.close()
+    with open("creds/.jwtToken", "w") as f:
+        f.write(jwt)
 
 def getJWT():
-    jwt = ""
-    try:
-        f = open("creds/.jwtToken", 'r')
-        jwt = f.read()
-        f.close()
-    except IOError:
-        print("Please login by using python3 login.py first.")
-        f.close()
+    filepath = "creds/.jwtToken"
+    if not os.path.exists(filepath):
+        print(uxiosLoginFirst)
         exit()
-
+    with open(filepath, "r") as f:
+        jwt = f.read()
     return jwt
 
+def getUserCreds():
+    if not os.path.isfile("creds/.uuid"):
+        with open("creds/.uuid", "w") as f:
+            f.write("")
+
+    if not os.path.isfile("creds/.jwtToken"):
+        with open("creds/.jwtToken", "w") as f:
+            f.write("")
+    else:
+        if getJWT() != "":
+            print(uxiosExistingJWT)
+            exit()
+
 def shakepayAPIAuth(shakepayUsername, shakepayPassword):
-    #print("Calling Shakepay API Endpoint using POST /authentication")
     headers =  {
         "x-device-total-memory": "6014582784",
         "x-device-serial-number":"",
         "x-device-name": "",
         "x-device-has-notch": "false",
-        "user-agent": "Shakepay App v1.9.46 (19046) on domi167 bot",
+        "user-agent": "Shakepay App v1.9.52 (19052) on beep boop bot 🤖",
         "x-device-locale": "en-CA",
-        "x-device-manufacturer": "Bot",
+        "x-device-manufacturer": "Shakebot",
         "x-device-is-tablet": "false",
         "x-device-total-disk-capacity": "127881465856",
-        "x-device-system-name": "Python",
+        "x-device-system-name": "Shakebot " + botVersion,
         "x-device-carrier": "",
-        "x-device-model": "Bot",
+        "x-device-model": "Created by domi & hydra",
         "x-device-id": "",
         "x-device-country": "CA",
         "x-device-mac-address": "02:00:00:00:00:00",
@@ -72,7 +75,7 @@ def shakepayAPIAuth(shakepayUsername, shakepayPassword):
         "x-device-unique-id": getUUID(),
         "content-type": "application/json",
         "accept": "application/json",
-        "x-device-brand": "Bot",
+        "x-device-brand": "Shakebot",
         "accept-encoding": "gzip, deflate, br",
         "x-device-system-version": "",
     }
@@ -80,26 +83,25 @@ def shakepayAPIAuth(shakepayUsername, shakepayPassword):
     try:
         return requests.post("https://api.shakepay.com/authentication", json=credentials, headers=headers) 
     except Exception:
-        print("Request failed, backing off for 5 seconds.")
+        print(uxiosShakepayAPIBackOff)
         time.sleep(5)
         return shakepayAPIAuth(shakepayUsername, shakepayPassword)
 
 def shakepayAPIPost(endpoint, jsonData):
-    #print("Calling Shakepay API Endpoint using POST "+endpoint)
     headers =  {
         "authorization": getJWT(),
         "x-device-total-memory": "6014582784",
         "x-device-serial-number":"",
         "x-device-name": "",
         "x-device-has-notch": "false",
-        "user-agent": "Shakepay App v1.9.46 (19046) on domi167 bot",
+        "user-agent": "Shakepay App v1.9.52 (19052) on beep boop bot 🤖",
         "x-device-locale": "en-CA",
-        "x-device-manufacturer": "Bot",
+        "x-device-manufacturer": "Shakebot",
         "x-device-is-tablet": "false",
         "x-device-total-disk-capacity": "127881465856",
-        "x-device-system-name": "Python",
+        "x-device-system-name": "Shakebot " + botVersion,
         "x-device-carrier": "",
-        "x-device-model": "Bot",
+        "x-device-model": "Created by domi & hydra",
         "x-device-id": "",
         "x-device-country": "CA",
         "x-device-mac-address": "02:00:00:00:00:00",
@@ -108,14 +110,14 @@ def shakepayAPIPost(endpoint, jsonData):
         "x-device-unique-id": getUUID(),
         "content-type": "application/json",
         "accept": "application/json",
-        "x-device-brand": "Bot",
+        "x-device-brand": "Shakebot",
         "accept-encoding": "gzip, deflate, br",
         "x-device-system-version": "",
     }
     try:
         return requests.post("https://api.shakepay.com"+endpoint, json=jsonData, headers=headers) 
     except Exception:
-        print("Request failed, backing off for 5 seconds.")
+        print(uxiosShakepayAPIBackOff)
         time.sleep(5)
         return shakepayAPIPost(endpoint, jsonData)
 
