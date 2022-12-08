@@ -52,8 +52,8 @@ def testDiscordMessage(message):
         "avatar_url": "https://fujiwara.pw/i/jmn7U.png"
     }
 
-    discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
-    if discordResponse.status_code == 200 or 204:
-        return True
-    else:
-        logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(discordResponse.status_code))
+        discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
+        if discordResponse.status_code == 200 or 204:
+            return True
+        else:
+            logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(discordResponse.status_code))
