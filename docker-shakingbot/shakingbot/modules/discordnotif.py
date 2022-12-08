@@ -4,8 +4,6 @@ import os
 from modules.shakepay import logging
 from modules.uxios import *
 
-logging.basicConfig(filename='shakingbot.log', level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
 discordOPT = os.path.exists("creds/.discordWebhook")
 
 def discordWebhookReq(question, default_no=True):
