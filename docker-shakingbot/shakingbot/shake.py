@@ -1,9 +1,11 @@
 from modules.shakepay import *
 from modules.telegramnotif import *
+from modules.discordnotif import *
 
 logging.basicConfig(filename='shakingbot.log', level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 testTelegramMessage(uxiosTelegramCheckConnection)
+testDiscordMessage(uxiosDiscordCheckConnection)
 
 while True:
     
@@ -14,6 +16,9 @@ while True:
     apiPostResponse = json.loads(resp.text)
     formatted_apiPostResponse = json.dumps(apiPostResponse)
     APIMessage = json.loads(formatted_apiPostResponse)
+
+    #APIMessage = {'success': True, 'currency': 'satoshis', 'streak': 69420, 'cumulativeTotal': 481900, 'amount': 1000, 'shakingTask': {}}
+    #APIMessage = {'error': 'test'}
 
     checkTelegramOPT()
 
@@ -27,13 +32,16 @@ while True:
         logging.info(uxiosSuccessfulShake + streakAmount)
         if telegramOPT == True:
             sendToTelegram(uxiosTelegramSuccessfulShake + streakAmount)
+        if discordOPT == True:
+            sendToDiscord(uxiosDiscordSuccessfulShake + streakAmount)
         time.sleep((3600*6)+randint(0, 7200))
     else:
+        logging.info(uxiosFailedShake)
         if telegramOPT == True:
             sendToTelegram(uxiosTelegramFailedShake)
-            logging.info(uxiosFailedShake)
-            time.sleep(1800)
+        if discordOPT == True:
+            sendToDiscord(uxiosDiscordFailedShake)
         else:
             print(uxiosFailedShake)
             logging.info(uxiosFailedShake)
-            time.sleep(1800)
+        time.sleep(1800)
