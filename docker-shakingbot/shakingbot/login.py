@@ -1,15 +1,11 @@
 from modules.shakepay import *
-from modules.telegramnotif import *
 
 getUserCreds()
 
 shakepayUsername = input(uxiosUsernameReq)
 shakepayPassword = getpass(uxiosPasswordReq)
 
-if telegramOPT == False:
-    telegramApiToken(uxiosTelegramOpt)
-else:
-    print(uxiosExistingTelegramAPI)
+checkUserNotif()
 
 print(uxiosSendingLogin)
 
