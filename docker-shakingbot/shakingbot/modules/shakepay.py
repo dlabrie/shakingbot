@@ -10,11 +10,8 @@ import os
 from getpass import getpass
 from random import *
 from modules.telegramnotif import *
+from modules.discordnotif import *
 from modules.uxios import *
-
-######################
-botVersion = "Ver. 1.22"
-######################
 
 def getUUID():
     filepath = "creds/.uuid"
@@ -123,3 +120,14 @@ def shakepayAPIPost(endpoint, jsonData):
 
 def shakingSats():
     return shakepayAPIPost("/shaking-sats", {})
+
+def checkUserNotif():
+    if telegramOPT == False:
+        telegramApiToken(uxiosTelegramOpt)
+    else:
+        print(uxiosExistingTelegramAPI)
+
+    if discordOPT == False:
+        discordWebhookReq(uxiosDiscordOpt)
+    else:
+        print(uxiosExistingDiscordWebhook)

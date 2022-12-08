@@ -25,6 +25,8 @@ def testTelegramMessage(message):
             response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
         except Exception as e:
             print(e)
+    else:
+        return False
 
 def sendToTelegram(message):
     apiToken = checkTelegramOPT.key
