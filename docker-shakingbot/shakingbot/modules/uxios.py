@@ -5,7 +5,7 @@ User experience & input/output is the communication between an information proce
 
 """
 ######################
-botVersion = "Ver. 1.34"
+botVersion = "Ver. 1.37"
 ######################
 
 ### General ###
