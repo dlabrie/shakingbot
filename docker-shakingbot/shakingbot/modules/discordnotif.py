@@ -34,7 +34,7 @@ def sendToDiscord(message):
     discordPayload = {
         "content": message,
         "username": "Shakebot " + botVersion,
-        "avatar_url": "https://fujiwara.pw/i/jmn7U.png"
+        "avatar_url": "https://fujiwara.pw/i/vXXc8.png"
     }
 
     discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
@@ -49,7 +49,7 @@ def testDiscordMessage(message):
         discordPayload = {
         "content": message,
         "username": "Shakebot " + botVersion,
-        "avatar_url": "https://fujiwara.pw/i/jmn7U.png"
+        "avatar_url": "https://fujiwara.pw/i/vXXc8.png"
     }
 
         discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
