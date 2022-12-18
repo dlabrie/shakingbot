@@ -2,23 +2,24 @@ from modules.shakepay import *
 from modules.telegramnotif import *
 from modules.discordnotif import *
 
-logging.basicConfig(filename='shakingbot.log', level=logging.INFO,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+logging.basicConfig(filename='shakingbot.log', level=logging.INFO,
+                    format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 testTelegramMessage(uxiosTelegramCheckConnection)
 testDiscordMessage(uxiosDiscordCheckConnection)
 
 while True:
-    
+
     print("\n--- "+str(datetime.datetime.now()))
     logging.info(uxiosShakeAttempt)
-    
+
     resp = shakingSats()
     apiPostResponse = json.loads(resp.text)
     formatted_apiPostResponse = json.dumps(apiPostResponse)
     APIMessage = json.loads(formatted_apiPostResponse)
 
-    #APIMessage = {'success': True, 'currency': 'satoshis', 'streak': 69420, 'cumulativeTotal': 481900, 'amount': 1000, 'shakingTask': {}}
-    #APIMessage = {'error': 'test'}
+    # APIMessage = {'success': True, 'currency': 'satoshis', 'streak': 69420, 'cumulativeTotal': 481900, 'amount': 1000, 'shakingTask': {}}
+    # APIMessage = {'error': 'test'}
 
     checkTelegramOPT()
 

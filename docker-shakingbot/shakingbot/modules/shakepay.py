@@ -1,5 +1,5 @@
 import datetime
-import jwt 
+import jwt
 import logging
 import requests
 import time
@@ -13,6 +13,7 @@ from modules.telegramnotif import *
 from modules.discordnotif import *
 from modules.uxios import *
 
+
 def getUUID():
     filepath = "creds/.uuid"
     if not os.path.exists(filepath):
@@ -24,9 +25,11 @@ def getUUID():
             fakeUUID = f.read().upper()
     return fakeUUID
 
+
 def saveJWT(jwt):
     with open("creds/.jwtToken", "w") as f:
         f.write(jwt)
+
 
 def getJWT():
     filepath = "creds/.jwtToken"
@@ -36,6 +39,7 @@ def getJWT():
     with open(filepath, "r") as f:
         jwt = f.read()
     return jwt
+
 
 def getUserCreds():
     if not os.path.isfile("creds/.uuid"):
@@ -50,10 +54,11 @@ def getUserCreds():
             print(uxiosExistingJWT)
             exit()
 
+
 def shakepayAPIAuth(shakepayUsername, shakepayPassword):
-    headers =  {
+    headers = {
         "x-device-total-memory": "6014582784",
-        "x-device-serial-number":"",
+        "x-device-serial-number": "",
         "x-device-name": "",
         "x-device-has-notch": "false",
         "user-agent": "Shakepay App v1.9.52 (19052) on beep boop bot",
@@ -76,19 +81,21 @@ def shakepayAPIAuth(shakepayUsername, shakepayPassword):
         "accept-encoding": "gzip, deflate, br",
         "x-device-system-version": "",
     }
-    credentials =  {"strategy":"local","totpType":"sms","username":shakepayUsername,"password":shakepayPassword}
+    credentials = {"strategy": "local", "totpType": "sms",
+                   "username": shakepayUsername, "password": shakepayPassword}
     try:
-        return requests.post("https://api.shakepay.com/authentication", json=credentials, headers=headers) 
+        return requests.post("https://api.shakepay.com/authentication", json=credentials, headers=headers)
     except Exception:
         print(uxiosShakepayAPIBackOff)
         time.sleep(5)
         return shakepayAPIAuth(shakepayUsername, shakepayPassword)
 
+
 def shakepayAPIPost(endpoint, jsonData):
-    headers =  {
+    headers = {
         "authorization": getJWT(),
         "x-device-total-memory": "6014582784",
-        "x-device-serial-number":"",
+        "x-device-serial-number": "",
         "x-device-name": "",
         "x-device-has-notch": "false",
         "user-agent": "Shakepay App v1.9.52 (19052) on beep boop bot",
@@ -112,14 +119,16 @@ def shakepayAPIPost(endpoint, jsonData):
         "x-device-system-version": "",
     }
     try:
-        return requests.post("https://api.shakepay.com"+endpoint, json=jsonData, headers=headers) 
+        return requests.post("https://api.shakepay.com"+endpoint, json=jsonData, headers=headers)
     except Exception:
         print(uxiosShakepayAPIBackOff)
         time.sleep(5)
         return shakepayAPIPost(endpoint, jsonData)
 
+
 def shakingSats():
     return shakepayAPIPost("/shaking-sats", {})
+
 
 def checkUserNotif():
     if telegramOPT == False:

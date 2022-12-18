@@ -15,14 +15,17 @@ with shakepayAPIAuth(shakepayUsername, shakepayPassword) as response:
 
 if "accessToken" in accessResponse:
     saveJWT(accessResponse["accessToken"])
-    jwtAccessToken = jwt.decode(accessResponse["accessToken"], algorithms="HS256", options={"verify_signature": False})
-    if jwtAccessToken["mfa"]==True:
+    jwtAccessToken = jwt.decode(accessResponse["accessToken"], algorithms="HS256", options={
+                                "verify_signature": False})
+    if jwtAccessToken["mfa"] == True:
         smsCode = input(uxiosSMS)
-        response = shakepayAPIPost("/authentication", {"strategy":"mfa","mfaToken":smsCode})
+        response = shakepayAPIPost(
+            "/authentication", {"strategy": "mfa", "mfaToken": smsCode})
         accessResponse = json.loads(response.text)
         if "accessToken" in accessResponse:
             saveJWT(accessResponse["accessToken"])
-            jwtAccessToken = jwt.decode(accessResponse["accessToken"], algorithms="HS256", options={"verify_signature": False}) 
+            jwtAccessToken = jwt.decode(accessResponse["accessToken"], algorithms="HS256", options={
+                                        "verify_signature": False})
         else:
             accessResponse = json.loads(response.text)
             formatted_accessResponse = json.dumps(accessResponse)
