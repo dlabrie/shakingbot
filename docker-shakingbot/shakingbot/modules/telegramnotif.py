@@ -6,6 +6,7 @@ from modules.uxios import *
 
 telegramOPT = os.path.exists("creds/.telegramAPIToken")
 
+
 def checkTelegramOPT():
     if telegramOPT == True:
         rKey = open("creds/.telegramAPIToken", "r")
@@ -15,6 +16,7 @@ def checkTelegramOPT():
     else:
         return False
 
+
 def testTelegramMessage(message):
     if telegramOPT == True:
         checkTelegramOPT()
@@ -22,21 +24,25 @@ def testTelegramMessage(message):
         chatID = checkTelegramOPT.id
         apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
         try:
-            response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+            response = requests.post(
+                apiURL, json={'chat_id': chatID, 'text': message})
         except Exception as e:
             print(e)
     else:
         return False
+
 
 def sendToTelegram(message):
     apiToken = checkTelegramOPT.key
     chatID = checkTelegramOPT.id
     apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
     try:
-        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        response = requests.post(
+            apiURL, json={'chat_id': chatID, 'text': message})
     except Exception as e:
         print(e)
-    
+
+
 def telegramApiToken(question, default_no=True):
     choices = ' [y/N]: ' if default_no else ' [Y/n]: '
     prompt = f"{question}{choices}"

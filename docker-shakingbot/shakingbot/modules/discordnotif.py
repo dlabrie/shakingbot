@@ -6,6 +6,7 @@ from modules.uxios import *
 
 discordOPT = os.path.exists("creds/.discordWebhook")
 
+
 def discordWebhookReq(question, default_no=True):
     choices = ' [y/N]: ' if default_no else ' [Y/n]: '
     prompt = f"{question}{choices}"
@@ -23,12 +24,14 @@ def discordWebhookReq(question, default_no=True):
         return False if reply[0] == 'n' else not default_no
     return False if default_no else True
 
+
 def checkDiscordOPT():
     if discordOPT == True:
         rURL = open("creds/.discordWebhook", "r")
         checkDiscordOPT.key = rURL.read()
     else:
         return False
+
 
 def sendToDiscord(message):
     discordPayload = {
@@ -37,23 +40,28 @@ def sendToDiscord(message):
         "avatar_url": "https://fujiwara.pw/i/vXXc8.png"
     }
 
-    discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
+    discordResponse = requests.post(
+        "https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
     if discordResponse.status_code == 200 or 204:
         return True
     else:
-        logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(discordResponse.status_code))
+        logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(
+            discordResponse.status_code))
+
 
 def testDiscordMessage(message):
     if discordOPT == True:
         checkDiscordOPT()
         discordPayload = {
-        "content": message,
-        "username": "Shakebot " + botVersion,
-        "avatar_url": "https://fujiwara.pw/i/vXXc8.png"
-    }
+            "content": message,
+            "username": "Shakebot " + botVersion,
+            "avatar_url": "https://fujiwara.pw/i/vXXc8.png"
+        }
 
-        discordResponse = requests.post("https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
+        discordResponse = requests.post(
+            "https://discord.com/api/webhooks/" + checkDiscordOPT.key, json=discordPayload)
         if discordResponse.status_code == 200 or 204:
             return True
         else:
-            logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(discordResponse.status_code))
+            logging.info("Error sending Discord webhook message: HTTPS ERROR {}".format(
+                discordResponse.status_code))
