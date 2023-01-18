@@ -15,6 +15,7 @@ uxiosLoginFirst = "Please login by using python3 login.py first."
 uxiosExistingJWT = "Looks like you already have a session, delete creds/.jwtToken to force this."
 uxiosSendingLogin = "Sending initial login request..."
 uxiosSMS = "Login is being MFA'd, please enter your SMS code [numbers only, no dash]: "
+uxiosErrorSubmittingAuthRequest = "There was an error submitting the authentication request."
 uxiosShakepayAPIBackOff = "Request failed, backing off for 5 seconds."
 uxiosShakeAttempt = "Attempting to Shake"  # No period to follow log format.
 uxiosSuccessfulShake = "Succesfully Shaken | Current streak in days: "

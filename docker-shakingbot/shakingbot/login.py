@@ -1,5 +1,7 @@
 from modules.shakepay import *
 
+shakepayPullConfig()
+
 getUserCreds()
 
 shakepayUsername = input(uxiosUsernameReq)
@@ -10,8 +12,16 @@ checkUserNotif()
 print(uxiosSendingLogin)
 
 with shakepayAPIAuth(shakepayUsername, shakepayPassword) as response:
-    accessResponse = json.loads(response.text)
-    formatted_accessResponse = json.dumps(accessResponse)
+    try:
+        accessResponse = json.loads(response.text)
+        formatted_accessResponse = json.dumps(accessResponse)
+    except Exception:
+        print(uxiosErrorSubmittingAuthRequest)
+        print("--------------------")
+        print(response)
+        print("--------------------")
+        print(response.text)
+        exit()
 
 if "accessToken" in accessResponse:
     saveJWT(accessResponse["accessToken"])
