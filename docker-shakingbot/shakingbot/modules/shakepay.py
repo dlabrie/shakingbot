@@ -23,8 +23,16 @@ def getUUID():
     else:
         with open(filepath, "r") as f:
             fakeUUID = f.read().upper()
+            if fakeUUID == "":
+                with open(filepath, "w") as f:
+                    fakeUUID = str(uuid.uuid4()).upper()
+                    f.write(fakeUUID)
+    if fakeUUID == "":
+        print("There was a problem generating a device id, cannot proceed.")
+        exit()
     return fakeUUID
 
+getUUID()
 
 def saveJWT(jwt):
     with open("creds/.jwtToken", "w") as f:
@@ -68,7 +76,7 @@ def shakepayAPIAuth(shakepayUsername, shakepayPassword):
         "x-device-total-disk-capacity": "127881465856",
         "x-device-system-name": "Shakebot " + botVersion,
         "x-device-carrier": "",
-        "x-device-model": "Created by domi & hydra",
+        "x-device-model": "Created by domi and hydra",
         "x-device-id": "",
         "x-device-country": "CA",
         "x-device-mac-address": "02:00:00:00:00:00",
@@ -105,7 +113,7 @@ def shakepayAPIPost(endpoint, jsonData):
         "x-device-total-disk-capacity": "127881465856",
         "x-device-system-name": "Shakebot " + botVersion,
         "x-device-carrier": "",
-        "x-device-model": "Created by domi & hydra",
+        "x-device-model": "Created by domi and hydra",
         "x-device-id": "",
         "x-device-country": "CA",
         "x-device-mac-address": "02:00:00:00:00:00",
