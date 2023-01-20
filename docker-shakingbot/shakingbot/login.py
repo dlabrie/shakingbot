@@ -9,7 +9,12 @@ shakepayPassword = getpass(uxiosPasswordReq)
 
 checkUserNotif()
 
+print("")
+print("This login script is currently broken, CloudFlare is blocking the auth requests")
+print("")
+
 print(uxiosSendingLogin)
+print("")
 
 with shakepayAPIAuth(shakepayUsername, shakepayPassword) as response:
     try:

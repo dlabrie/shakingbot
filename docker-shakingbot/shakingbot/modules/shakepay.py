@@ -58,7 +58,7 @@ def getUserCreds():
             print(uxiosExistingJWT)
             exit()
 
-header = {
+headers = {
     "x-device-serial-number":"unknown",
     "x-device-total-memory":"5980209152",
     "x-device-name":"iPhone",
@@ -98,8 +98,8 @@ def shakepayPullConfig():
     print(session.cookies.get_dict())   
 
 def shakepayAPIAuth(shakepayUsername, shakepayPassword):
-    h = headers
-    h["content-type"] = "application/json"
+    headers2 = headers
+    headers2["content-type"] = "application/json"
     credentials = {
         "password": shakepayPassword,
         "strategy": "local",
@@ -107,7 +107,7 @@ def shakepayAPIAuth(shakepayUsername, shakepayPassword):
         "username": shakepayUsername
     }
     try:
-        return session.post("https://api.shakepay.com/authentication", json=credentials, headers=headers)
+        return session.post("https://api.shakepay.com/authentication", json=credentials, headers=headers2)
     except Exception:
         print(uxiosShakepayAPIBackOff)
         time.sleep(5)
