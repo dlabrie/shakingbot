@@ -1,3 +1,6 @@
+# Maintenance of this bot
+This bot code is no longer maintained, it was fun while it lasted. If you know how to make it work for yourself, great, but I don't want to get in trouble with Shakepay.
+
 # Python Shakingbot
 
 These scripts and bot are provided "as is" and do not have any guarantees on their outcome. By using these scripts you acknowledge this disclamer and assume full responsibility of using them.
